@@ -1,10 +1,11 @@
 package ru.netology;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.DataGenerator;
 
 import java.time.Duration;
@@ -19,6 +20,16 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.Keys.BACK_SPACE;
 
 public class ReplanDeliveryTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDown() {
+        SelenideLogger.removeListener("allure");
+    }
 
 
     @BeforeEach
@@ -60,4 +71,5 @@ public class ReplanDeliveryTest {
 
 
     }
+    
 }
