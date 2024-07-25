@@ -71,5 +71,24 @@ public class ReplanDeliveryTest {
 
 
     }
-    
+
+    @Test
+    @DisplayName("Should get error message if entered wrong phone number")
+    void shouldGetErrorIfWrongPhone() {
+        var validUser = DataGenerator.Registration.generateUser("ru");
+        var daysToAddForFirstMeeting = 4;
+        var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
+
+        $("[data-test-id=city] input").setValue(validUser.getCity());
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input").sendKeys(BACK_SPACE);
+        $("[data-test-id=date] input").setValue(firstMeetingDate);
+        $("[data-test-id=name] input").setValue(validUser.getName());
+        $("[data-test-id=phone] input").setValue("+9878");
+        $("[data-test-id=agreement]").click();
+        $(".button").click();
+        $("[data-test-id=phone].input_invalid .input__sub").
+                shouldHave(exactText("Ошибка!"));
+    }
+
 }
